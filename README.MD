@@ -150,10 +150,8 @@ The final model was evaluated using:
 * **F1-score**
 * **Confusion Matrix**
 
-Example confusion matrix:
-
 ```
-(Add confusion_matrix.png here)
+
 ```
 
 The evaluation report was generated using **scikit-learn classification metrics**.
