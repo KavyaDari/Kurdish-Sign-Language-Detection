@@ -1,183 +1,181 @@
-Kurdish Sign Language Recognition using Deep Learning
-Overview
+# Kurdish Sign Language Recognition using Deep Learning
 
-This project focuses on building an AI system that recognizes Kurdish Sign Language gestures using deep learning. The goal is to classify hand gesture images into 34 different Kurdish sign language classes using modern computer vision models.
+## **Overview**
+
+This project focuses on building an AI system that recognizes **Kurdish Sign Language gestures** using deep learning. The goal is to classify hand gesture images into **34 different Kurdish sign language classes** using modern computer vision models.
 
 To achieve this, multiple deep learning architectures were implemented and compared, including:
 
-Custom Convolutional Neural Network (CNN)
+* **Custom Convolutional Neural Network (CNN)**
+* **ResNet50 (Transfer Learning)**
+* **EfficientNet-B0**
+* **Vision Transformer (ViT)**
+* **Hybrid Feature Fusion Model (ResNet + ViT)**
 
-ResNet50 (Transfer Learning)
+The final hybrid model achieved **99.31% classification accuracy** on the validation dataset.
 
-EfficientNet-B0
+---
 
-Vision Transformer (ViT)
+## **Dataset**
 
-Hybrid Feature Fusion Model (ResNet + ViT)
+The model was trained on the **KuSL2023 Kurdish Sign Language Dataset**, which contains:
 
-The final hybrid model achieved 99.31% classification accuracy on the validation dataset.
+* **71,000+ labeled images**
+* **34 gesture classes**
+* **RGB hand gesture images**
 
-Dataset
+Each class corresponds to a unique **Kurdish sign language symbol**.
 
-The model was trained on the KuSL2023 Kurdish Sign Language Dataset, which contains:
+Images were **resized and normalized** before training to ensure consistent input across models.
 
-71,000+ labeled images
+---
 
-34 gesture classes
-
-RGB hand gesture images
-
-Each class corresponds to a unique Kurdish sign language symbol.
-
-Images were resized and normalized before training to ensure consistent input across models.
-
-Project Pipeline
+## **Project Pipeline**
 
 The project followed a progressive deep learning workflow:
 
-Build a baseline CNN model
+1. Build a **baseline CNN model**
+2. Apply **transfer learning with ResNet50**
+3. Train **EfficientNet for efficient CNN architecture**
+4. Implement **Vision Transformer (ViT)**
+5. Combine CNN and Transformer features using a **fusion model**
 
-Apply transfer learning with ResNet50
+This pipeline allows comparison between **traditional CNN models and transformer-based architectures**.
 
-Train EfficientNet for efficient CNN architecture
+---
 
-Implement Vision Transformer (ViT)
+## **Model Architectures**
 
-Combine CNN and Transformer features using a fusion model
-
-This pipeline allows comparison between traditional CNN models and transformer-based architectures.
-
-Model Architectures
-1. Custom CNN (Baseline)
+### **1. Custom CNN (Baseline)**
 
 A simple convolutional neural network was built from scratch with:
 
-Convolution layers
+* Convolution layers
+* Max pooling
+* Fully connected layers
+* Dropout regularization
 
-Max pooling
+This served as the **baseline model**.
 
-Fully connected layers
+**Accuracy achieved:**
+**96.6%**
 
-Dropout regularization
+---
 
-This served as the baseline model.
+### **2. ResNet50 (Transfer Learning)**
 
-Accuracy achieved:
-
-96.6%
-
-2. ResNet50 (Transfer Learning)
-
-A pretrained ResNet50 model was used with ImageNet weights.
+A pretrained **ResNet50** model was used with **ImageNet weights**.
 
 Steps:
 
-Freeze backbone layers
+* Freeze backbone layers
+* Replace classifier layer
+* Fine-tune final blocks
 
-Replace classifier layer
+**Accuracy achieved:**
+**99.2%**
 
-Fine-tune final blocks
+---
 
-Accuracy achieved:
+### **3. EfficientNet-B0**
 
-99.2%
-
-3. EfficientNet-B0
-
-EfficientNet uses compound scaling to balance depth, width, and resolution.
+EfficientNet uses **compound scaling** to balance depth, width, and resolution.
 
 Steps:
 
-Load pretrained EfficientNet-B0
+* Load pretrained EfficientNet-B0
+* Train classifier head
+* Fine-tune deeper layers
 
-Train classifier head
+**Accuracy achieved:**
+**98.2%**
 
-Fine-tune deeper layers
+---
 
-Accuracy achieved:
+### **4. Vision Transformer (ViT-Small)**
 
-98.2%
+A transformer-based vision model was trained using **ViT-Small**.
 
-4. Vision Transformer (ViT-Small)
+Unlike CNNs, transformers process images as **patch sequences** and learn global relationships using **self-attention**.
 
-A transformer-based vision model was trained using ViT-Small.
+**Accuracy achieved:**
+**98.54%**
 
-Unlike CNNs, transformers process images as patch sequences and learn global relationships using self-attention.
+---
 
-Accuracy achieved:
-
-98.54%
-
-5. Feature Fusion Model (ResNet + ViT)
+### **5. Feature Fusion Model (ResNet + ViT)**
 
 The final model combines features from:
 
-ResNet50 (spatial CNN features)
-
-Vision Transformer (global attention features)
+* **ResNet50 (spatial CNN features)**
+* **Vision Transformer (global attention features)**
 
 Architecture:
 
+```
 Image
  ├── ResNet50 → Feature Vector
  ├── ViT-Small → Feature Vector
  └── Concatenation → Fusion Network → Classifier
+```
 
-The fusion network learns to combine both feature types for improved representation.
+The fusion network learns to **combine both feature types for improved representation**.
 
-Final accuracy achieved:
+**Final accuracy achieved:**
+**99.31%**
 
-99.31%
+---
 
-Model Performance Comparison
-Model	Accuracy
-Custom CNN	96.6%
-ResNet50	99.2%
-EfficientNet-B0	98.2%
-ViT-Small	98.54%
-Fusion Model (ResNet + ViT)	99.31%
+## **Model Performance Comparison**
 
-The fusion architecture achieved the best performance.
+| Model                           | Accuracy   |
+| ------------------------------- | ---------- |
+| Custom CNN                      | 96.6%      |
+| ResNet50                        | 99.2%      |
+| EfficientNet-B0                 | 98.2%      |
+| ViT-Small                       | 98.54%     |
+| **Fusion Model (ResNet + ViT)** | **99.31%** |
 
-Evaluation Metrics
+The **fusion architecture achieved the best performance**.
+
+---
+
+## **Evaluation Metrics**
 
 The final model was evaluated using:
 
-Accuracy
-
-Precision
-
-Recall
-
-F1-score
-
-Confusion Matrix
+* **Accuracy**
+* **Precision**
+* **Recall**
+* **F1-score**
+* **Confusion Matrix**
 
 Example confusion matrix:
 
+```
 (Add confusion_matrix.png here)
+```
 
-The evaluation report was generated using scikit-learn classification metrics.
+The evaluation report was generated using **scikit-learn classification metrics**.
 
-Technologies Used
+---
 
-Python
+## **Technologies Used**
 
-PyTorch
+* **Python**
+* **PyTorch**
+* **TorchVision**
+* **TIMM (Vision Transformer models)**
+* **NumPy**
+* **Scikit-learn**
+* **Matplotlib**
+* **Seaborn**
 
-TorchVision
+---
 
-TIMM (Vision Transformer models)
+## **Project Structure**
 
-NumPy
-
-Scikit-learn
-
-Matplotlib
-
-Seaborn
-
-Project Structure
+```
 kurdish-sign-language-recognition
 │
 ├── notebooks
@@ -196,30 +194,40 @@ kurdish-sign-language-recognition
 │
 ├── requirements.txt
 └── README.md
-Installation
+```
+
+---
+
+## **Installation**
 
 Clone the repository:
 
+```
 git clone https://github.com/yourusername/kurdish-sign-language-recognition.git
 cd kurdish-sign-language-recognition
+```
 
 Install dependencies:
 
+```
 pip install -r requirements.txt
-Future Improvements
+```
+
+---
+
+## **Future Improvements**
 
 Possible improvements include:
 
-Real-time gesture recognition using webcam
+* Real-time gesture recognition using **webcam**
+* Deploying the model as a **web application**
+* Building a **mobile sign language translator**
+* Expanding the dataset to include **more gestures**
 
-Deploying the model as a web application
+---
 
-Building a mobile sign language translator
+## **Author**
 
-Expanding the dataset to include more gestures
-
-Author
-
-Developed by Kavya Dari
+**Kavya Dari**
 
 Computer Science Student | Machine Learning Enthusiast
